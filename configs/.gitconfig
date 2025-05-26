@@ -1,0 +1,16 @@
+[user]
+	useConfigOnly = true
+[includeIf "gitdir:~/Projects/"]
+	path = ~/.gitconfig.personal
+[includeIf "gitdir:~/dotfiles/"]
+	path = ~/.gitconfig.personal
+[core]
+	editor = nvim
+[color]
+	ui = true
+[alias]
+	st = status
+	pu = pull
+	ci = commit
+	co = checkout
+	lg = log --oneline --graph --all --decorate

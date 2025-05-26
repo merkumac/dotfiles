@@ -11,6 +11,7 @@ DOTFILES_ROOT="$SCRIPT_DIR"
 # Configuration map of source:target paths
 DOTFILES=(
     "configs/.zshrc:$HOME/.zshrc"
+    "configs/.gitconfig:$HOME/.gitconfig"
     "configs/ghostty/config:$HOME/.config/ghostty/config"
 )
 
