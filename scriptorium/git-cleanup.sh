@@ -21,7 +21,18 @@ if [ "$branch" = "main" ]; then
 fi
 
 echo "Cleaning branch: $branch"
+
+# Swicth to main and update
 git switch main
 git pull
-git branch -d "$branch"
+
+# Check if the branch was merged before deleting
+if git branch --merged | grep -q "\b$branch\b"; then
+    echo "Branch '$branch' is merged - deleting it."
+    git branch -d "$branch"
+else
+    echo "Branch '$branch' in NOT merged into main!"
+    echo "Use 'git branch -D $branch' to force delete if you are sure."
+    exit 1
+fi
 
