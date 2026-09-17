@@ -50,3 +50,6 @@ esac
 if (( $+widgets[fzf-history-widget] )); then
     bindkey '^R' fzf-history-widget
 fi
+
+# machine secrets
+[[ -f "$HOME/.config/secrets.env" ]] && source "$HOME/.config/secrets.env"
