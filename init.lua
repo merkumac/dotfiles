@@ -32,7 +32,6 @@ vim.opt.completeopt = {
     "noselect",
 }
 
-
 -- ***
 -- lazy
 -- ***
@@ -41,11 +40,11 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
-	"clone",
-	"--filter=blob:none",
-	"https://github.com/folke/lazy.nvim.git",
-	"--branch=stable",
-	lazypath,
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable",
+        lazypath,
     })
 end
 
@@ -56,292 +55,286 @@ require("lazy").setup({
     -- Rose Pine
     {
         "rose-pine/neovim",
-	name = "rose-pine",
-	priority = 1000,
+        name = "rose-pine",
+        priority = 1000,
 
-	config = function()
-	    require("rose-pine").setup({
-	        variant = "main",
-		dark_variant = "main",
-	    })
+        config = function()
+            require("rose-pine").setup({
+                variant = "main",
+                dark_variant = "main",
+            })
 
-	    vim.cmd.colorscheme("rose-pine")
-	end,
+            vim.cmd.colorscheme("rose-pine")
+        end,
     },
 
     -- telescope
     {
         "nvim-telescope/telescope.nvim",
 
-	dependencies = {
+        dependencies = {
             "nvim-lua/plenary.nvim",
-	},
+        },
 
-	config = function()
-	    local builtin = require("telescope.builtin")
+        config = function()
+            local builtin = require("telescope.builtin")
 
-	    require("telescope").setup({})
+            require("telescope").setup({})
 
-	    vim.keymap.set("n", "<leader>ff", builtin.find_files, {
-	        desc = "Find files",
-	    })
+            vim.keymap.set("n", "<leader>ff", builtin.find_files, {
+                desc = "Find files",
+            })
 
-	    vim.keymap.set("n", "<leader>fb", builtin.buffers, {
-	        desc = "Find buffers",
-	    })
+            vim.keymap.set("n", "<leader>fb", builtin.buffers, {
+                desc = "Find buffers",
+            })
 
-	    vim.keymap.set("n", "<leader>fg", builtin.live_grep, {
-	        desc = "Live grep",
-	    })
+            vim.keymap.set("n", "<leader>fg", builtin.live_grep, {
+                desc = "Live grep",
+            })
 
-	    vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, {
+            vim.keymap.set("n", "<leader>fs", builtin.lsp_document_symbols, {
                 desc = "Find document symbols",
-	    })
+            })
 
-	    vim.keymap.set("n", "<leader>fS", builtin.lsp_workspace_symbols, {
-	        desc = "Find workspace symbols",
-	    })
-	end,
+            vim.keymap.set("n", "<leader>fS", builtin.lsp_workspace_symbols, {
+                desc = "Find workspace symbols",
+            })
+        end,
     },
 
     -- oil
     {
         "stevearc/oil.nvim",
 
-	config = function()
-	    require("oil").setup({
-	        default_file_explorer = true,
+        config = function()
+            require("oil").setup({
+                default_file_explorer = true,
 
-		view_options = {
-		    show_hidden = true,
-		},
-	    })
+                view_options = {
+                    show_hidden = true,
+                },
+            })
 
-	    vim.keymap.set("n", "<leader>e", "<cmd>Oil<CR>", {
-	        desc = "Open filesystem",
-	    })
-	end,
+            vim.keymap.set("n", "<leader>e", "<cmd>Oil<CR>", {
+                desc = "Open filesystem",
+            })
+        end,
     },
 
     -- treesitter
     {
         "nvim-treesitter/nvim-treesitter",
 
-	branch = "master",
-	build = ":TSUpdate",
+        branch = "master",
+        build = ":TSUpdate",
 
-	config = function()
-	    require("nvim-treesitter.configs").setup({
-	        ensure_installed = {
-		    "c",
-		    "cpp",
-		    "python",
-		    "lua",
-		    "vimdoc",
-		    "bash",
-		    "json",
-		    "toml",
-		    "yaml",
-		    "markdown",
-		    "markdown_inline",
-		},
+        config = function()
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = {
+                    "c",
+                    "cpp",
+                    "python",
+                    "lua",
+                    "vimdoc",
+                    "bash",
+                    "json",
+                    "toml",
+                    "yaml",
+                    "markdown",
+                    "markdown_inline",
+                },
 
-		auto_install = true,
+                auto_install = true,
 
-		highlight = {
-		    enable = true,
-		},
-
-		indent = {
-		    enable = true,
-	        },
-	    })
-	end,
+                highlight = {
+                    enable = true,
+                },
+            })
+        end,
     },
 
     -- completion
     {
         "saghen/blink.cmp",
 
-	version = "1.*",
+        version = "1.*",
 
-	opts = {
-	    enabled = function()
-	        return not vim.tbl_contains({
-		    "markdown",
-		    "text",
-		    "gitcommit",
-		}, vim.bo.filetype)
-	    end,
+        opts = {
+            enabled = function()
+                return not vim.tbl_contains({
+                    "markdown",
+                    "text",
+                    "gitcommit",
+                }, vim.bo.filetype)
+            end,
 
-	    keymap = {
-	        preset = "none",
+            keymap = {
+                preset = "none",
 
-		["<Tab>"] = {
-		    "select_next",
-		    "fallback",
-		},
+                ["<Tab>"] = {
+                    "select_next",
+                    "fallback",
+                },
 
-		["<S-Tab>"] = {
-		    "select_prev",
-		    "fallback",
-		},
+                ["<S-Tab>"] = {
+                    "select_prev",
+                    "fallback",
+                },
 
-		["<C-y>"] = {
-		    "accept",
-		},
+                ["<C-y>"] = {
+                    "accept",
+                },
 
-		["<C-e>"] = {
-		    "hide",
-		    "fallback",
-		},
-	    },
-
-	    completion = {
-	        
-	        menu = {
-		    auto_show = true,
-		},
-
-		list = {
-		    selection = {
-		        preselect = false,
-			auto_insert = false,
-		    },
-		},
-
-		documentation = {
-		    auto_show = true,
-		    auto_show_delay_ms = 500,
-		},
+                ["<C-e>"] = {
+                    "hide",
+                    "fallback",
+                },
             },
 
-	    sources = {
-	        default = {
-	            "lsp",
-		    "path",
-		    "buffer",
-		},
-	    },
-	},
+            completion = {
+
+                menu = {
+                    auto_show = true,
+                },
+
+                list = {
+                    selection = {
+                        preselect = false,
+                        auto_insert = false,
+                    },
+                },
+
+                documentation = {
+                    auto_show = true,
+                    auto_show_delay_ms = 500,
+                },
+            },
+
+            sources = {
+                default = {
+                    "lsp",
+                    "path",
+                    "buffer",
+                },
+            },
+        },
     },
 
     -- formatting
     {
         "stevearc/conform.nvim",
 
-	config = function()
-	    local conform = require("conform")
+        config = function()
+            local conform = require("conform")
 
-	    conform.setup({
-	        formatters_by_ft = {
-		    c = {
-		        "clang_format",
-		    },
+            conform.setup({
+                formatters_by_ft = {
+                    c = {
+                        "clang_format",
+                    },
 
-		    cpp = {
-			"clang_format",
-		    },
+                    cpp = {
+                        "clang_format",
+                    },
 
-		    python = {
-			"ruff_format",
-		    },
-		},
+                    python = {
+                        "ruff_format",
+                    },
 
-		format_on_save = {
-		    timeout_ms = 1000,
-		    lsp_format = "never",
-		},
+                    lua = {
+                        "stylua",
+                    },
+                },
+
+                format_on_save = {
+                    timeout_ms = 1000,
+                    lsp_format = "never",
+                },
             })
 
-	    vim.keymap.set("n", "<leader>cf", function()
-	        conform.format({
-		    async = true,
-		    lsp_format = "never",
-		})
-	    end, {
-	        desc = "Format file",
-	    })
-	end,
+            vim.keymap.set("n", "<leader>cf", function()
+                conform.format({
+                    async = true,
+                    lsp_format = "never",
+                })
+            end, {
+                desc = "Format file",
+            })
+        end,
     },
 
     -- code context - good for the late night work
     {
         "SmiteshP/nvim-navic",
 
-	config = function()
-	    local navic = require("nvim-navic")
+        config = function()
+            local navic = require("nvim-navic")
 
-	    navic.setup({
-	        highlight = true,
-		separator = " > ",
-		depth_limit = 0,
-	    })
+            navic.setup({
+                highlight = true,
+                separator = " > ",
+                depth_limit = 0,
+            })
 
-	    local enabled = false
+            local enabled = false
 
-	    vim.keymap.set("n", "<leader>tc", function()
-	        enabled = not enabled
+            vim.keymap.set("n", "<leader>tc", function()
+                enabled = not enabled
 
-		if enabled then
-		    vim.o.winbar =
-		        "%{%v:lua.require'nvim-navic'.get_location()%}"
-		else
-		    vim.o.winbar = ""
-		end
-	    end, {
-	        desc = "Toggle code context",
-	    })
+                if enabled then
+                    vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+                else
+                    vim.o.winbar = ""
+                end
+            end, {
+                desc = "Toggle code context",
+            })
 
-	    vim.api.nvim_create_autocmd("LspAttach", {
-	        callback = function(args)
-		    local client = vim.lsp.get_client_by_id(args.data.client_id)
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(args)
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-		    if client
-			and client.server_capabilities.documentSymbolProvider
-		    then
-			navic.attach(client, args.buf)
-		    end
-		end,
-	    })
-	end,
+                    if client and client.server_capabilities.documentSymbolProvider then
+                        navic.attach(client, args.buf)
+                    end
+                end,
+            })
+        end,
     },
 
     -- git
     {
-	"lewis6991/gitsigns.nvim",
+        "lewis6991/gitsigns.nvim",
 
-	config = function()
-	    require("gitsigns").setup({
-		signs = {
-		    add          = { text = "+" },
-		    change       = { text = "~" },
-		    delete       = { text = "_" },
-		    topdelete    = { text = "_" },
-		    changedelete = { text = "~" },
-		    untracked    = { text = "?" },
-		},
+        config = function()
+            require("gitsigns").setup({
+                signs = {
+                    add = { text = "+" },
+                    change = { text = "~" },
+                    delete = { text = "_" },
+                    topdelete = { text = "_" },
+                    changedelete = { text = "~" },
+                    untracked = { text = "?" },
+                },
 
-		signs_staged_enable = true,
-		current_line_blame = false,
+                signs_staged_enable = true,
+                current_line_blame = false,
 
-		current_line_blame_opts = {
-		    virt_text = true,
-		    virt_text_pos = "eol",
-		    delay = 500,
-		},
+                current_line_blame_opts = {
+                    virt_text = true,
+                    virt_text_pos = "eol",
+                    delay = 500,
+                },
 
-		on_attach = function(bufnr)
-		    vim.keymap.set("n", "<leader>tb",
-		        "<cmd>Gitsigns toggle_current_line_blame<CR>",
-			{
-			    buffer = bufnr,
-			    desc = "Toggle git blame",
-			}
-		    )
-		end,
-	    })
-	end,
+                on_attach = function(bufnr)
+                    vim.keymap.set("n", "<leader>tb", "<cmd>Gitsigns toggle_current_line_blame<CR>", {
+                        buffer = bufnr,
+                        desc = "Toggle git blame",
+                    })
+                end,
+            })
+        end,
     },
 })
 
@@ -353,16 +346,16 @@ vim.lsp.config("clangd", {
 
     filetypes = {
         "c",
-	"cpp",
-	"objc",
-	"objcpp",
+        "cpp",
+        "objc",
+        "objcpp",
     },
 
     root_markers = {
         "compile_commands.json",
-	"compile_flags.txt",
-	"CMakeLists.txt",
-	".git",
+        "compile_flags.txt",
+        "CMakeLists.txt",
+        ".git",
     },
 })
 
@@ -371,22 +364,21 @@ vim.lsp.enable("clangd")
 vim.lsp.config("pyright", {
     cmd = {
         "pyright-langserver",
-	"--stdio",
+        "--stdio",
     },
 
     filetypes = {
-	"python",
+        "python",
     },
 
     root_markers = {
-	"pyproject.toml",
-	"uv.lock",
-	".git",
+        "pyproject.toml",
+        "uv.lock",
+        ".git",
     },
 })
 
 vim.lsp.enable("pyright")
-
 
 -- lsp mappings
 
@@ -398,24 +390,19 @@ local function show_context()
         lnum = row,
     })
 
-    local params = vim.lsp.util.make_position_params(
-        0,
-        "utf-16"
-    )
+    local params = vim.lsp.util.make_position_params(0, "utf-16")
 
     vim.lsp.buf_request(bufnr, "textDocument/hover", params, function(err, result)
         if err then
             return
         end
-    
+
         local lines = {}
 
         -- LSP hover
         if result and result.contents then
-            local hover = vim.lsp.util.convert_input_to_markdown_lines(
-                result.contents
-            )
-            
+            local hover = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+
             vim.list_extend(lines, hover)
         end
 
@@ -443,41 +430,39 @@ local function show_context()
     end)
 end
 
-
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
+        local builtin = require("telescope.builtin")
 
-	local builtin = require("telescope.builtin")
+        local function opts(desc)
+            return {
+                buffer = args.buf,
+                desc = desc,
+            }
+        end
 
-	local function opts(desc)
-	    return {
-		buffer = args.buf,
-		desc = desc,
-	    }
-	end
+        -- nav
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts("Go to definition"))
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts("go to declaration"))
+        vim.keymap.set("n", "gr", builtin.lsp_references, opts("Find references"))
+        vim.keymap.set("n", "gi", builtin.lsp_implementations, opts("Find implementations"))
+        vim.keymap.set("n", "K", show_context, opts("Hover documentation"))
 
-	-- nav
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts("Go to definition"))
-	vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts("go to declaration"))
-	vim.keymap.set("n", "gr", builtin.lsp_references, opts("Find references"))
-	vim.keymap.set("n", "gi", builtin.lsp_implementations, opts("Find implementations"))
-	vim.keymap.set("n", "K", show_context, opts("Hover documentation"))
-
-	-- editing
-	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename symbol"))
-	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
+        -- editing
+        vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename symbol"))
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
     end,
 })
 
 -- diags
 vim.keymap.set("n", "[d", function()
-    vim.diagnostic.jump({ count = -1, float = true, })
+    vim.diagnostic.jump({ count = -1, float = true })
 end, {
     desc = "Previous diagnostic",
 })
 
 vim.keymap.set("n", "]d", function()
-    vim.diagnostic.jump({ count = 1, float = true, })
+    vim.diagnostic.jump({ count = 1, float = true })
 end, {
     desc = "Next diagnostic",
 })
@@ -494,3 +479,55 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- esc clear /search highlights
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
+-- whitespace
+vim.opt.list = true
+vim.opt.listchars = {
+    tab = "→ ",
+    trail = "·",
+    nbsp = "⎵",
+}
+
+vim.api.nvim_set_hl(0, "TrailingWhitespace", {
+    bg = "#9e2a2b",
+})
+
+local whitespace_group = vim.api.nvim_create_augroup("Whitespace", { clear = true })
+
+-- highlight trailing whitespace in every window
+vim.api.nvim_create_autocmd({
+    "BufWinEnter",
+    "WinEnter",
+}, {
+    group = whitespace_group,
+
+    callback = function()
+        if vim.bo.buftype ~= "" then
+            return
+        end
+
+        if vim.w.trailing_whitespace_match then
+            return
+        end
+
+        vim.w.trailing_whitespace_match = vim.fn.matchadd("TrailingWhitespace", [[\s\+$]])
+    end,
+})
+
+-- remove trailing whitespace on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+    group = whitespace_group,
+    pattern = "*",
+    callback = function()
+        if vim.bo.buftype ~= "" then
+            return
+        end
+
+        local view = vim.fn.winsaveview()
+
+        vim.cmd("silent! retab")
+
+        vim.cmd([[%s/\s\+$//e]])
+
+        vim.fn.winrestview(view)
+    end,
+})
