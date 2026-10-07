@@ -25,6 +25,26 @@ else
     PROMPT='%F{blue}%~%f %F{magenta}${vcs_info_msg_0_}%f %# '
 fi
 
+# vim keybindings
+bindkey -v
+KEYTIMEOUT=1
+
+# cursorshape depending on the mode
+# in insert - beam
+# in normal - block
+function zle-keymap-select {
+    if [[ $KEYMAP == vicmd ]]; then
+        printf '\e[2 q' # block
+    else
+        printf '\e[6 q' # beam
+    fi
+}
+
+# start in the normal mode's beam
+function zle-line-init {
+    printf '\e[6 q'
+}
+
 if command -v fzf > /dev/null; then
     alias hists='history | fzf'
 fi
@@ -71,8 +91,12 @@ esac
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if (( $+widgets[fzf-history-widget] )); then
-    bindkey '^R' fzf-history-widget
+    bindkey -M viins '^R' fzf-history-widget
+    bindkey -M vicmd '^R' fzf-history-widget
 fi
+
+zle -N zle-keymap-select
+zle -N zle-line-init
 
 # machine secrets
 [[ -f "$HOME/.config/secrets.env" ]] && source "$HOME/.config/secrets.env"
